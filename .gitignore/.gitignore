@@ -1,0 +1,5 @@
+*.py[cod]
+var/*.log
+jobs/*.txt
+*coverage*
+**/app.cfg
