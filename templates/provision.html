@@ -41,7 +41,6 @@ $(document).ready(function($) {
       // Update job status on command exit code
       if (response['result'] == 0) {
         document.getElementById("jobStatus").className = "jobstate jobstate-success";
-        document.getElementById("logDetails").className = "text-success collapsed";
       }else {
         document.getElementById("jobStatus").className = "jobstate jobstate-warning";
       }
@@ -58,7 +57,7 @@ $(document).ready(function($) {
 });
 
 function handleOutput(job_id) {
-  var output = document.getElementById('commandOut');
+  var output = document.getElementById('stdoutLines');
   var xhr = new XMLHttpRequest();
   var streamUrl = "{{ url_for('jobs.stream') }}"
   var params = "job_id=" + job_id;
@@ -69,10 +68,19 @@ function handleOutput(job_id) {
 
   function handleNewData() {
     var messages = xhr.responseText.split('\n');
+    var line = 1;
     messages.slice(position, -1).forEach(function(value) {
-      var item = document.createElement('li');
-      item.textContent = value;
+      var item = document.createElement('div');
+      item.setAttribute("class","Stdout-aLineOfStdOut");
+      item.innerHTML = `
+          <div id="lineAnchor" class="Stdout-lineAnchor"></div>
+          <a class="Stdout-lineNumberColumn" href="#${line}">
+            <span class="Stdout-lineExpander"></span>${line}
+          </a>
+          <div class="Stdout-stdoutColumn"><span ng-non-bindable="">${value}</span></div>
+          `;
       output.appendChild(item);
+      line++;
     });
     position = messages.length - 1;
   }
@@ -161,7 +169,7 @@ function handleOutput(job_id) {
         </div>
       </div>
 
-      <div class="Stdout-stdoutContainer collapse show;" id="stdoutLines">
+      <div class="Stdout-stdoutContainer collapse show" id="stdoutLines">
         <div id="topAnchor" class="Stdout-topAnchor"></div>
         <div class="Stdout-numberColumnPreload"></div>
         <div class="Stdout-aLineOfStdOut ng-hide">
