@@ -4,7 +4,7 @@ from flask import Flask, Response, redirect, url_for, request, session, abort, r
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_bcrypt import Bcrypt
 import logging
-from models.database import check_user
+
 auths = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
 
@@ -21,7 +21,7 @@ def login():
         username = request.form['username']
         password = request.form['pwd']
         try:
-            user_valid = check_user(username)
+            user_valid = db.check_user(username)
             if not user_valid:
                 raise ValueError('User Not present')
         except (ValueError):
