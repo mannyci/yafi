@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}Signup{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="col-lg-8 col-md-6 col-sm-6 mx-auto" style="width: 600px;top:100px;">
+
+  {%- for category, message in get_flashed_messages(with_categories = true) %}
+    {% if category == 'error' %}
+    <div class="alert alert-warning fade show" data-notify="container">
+      <span><i class="material-icons" data-notify="icon">warning</i></span>
+    {% else %}
+    <div class="alert alert-success fade show" data-notify="container">
+      <i class="material-icons" data-notify="icon">done</i>
+    {% endif %}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="material-icons">close</i>
+      </button>
+      <span>{{ message }}</span>
+    </div>
+  {% endfor %}
+
+    <div class="card card-login">
+      <div class="card-header card-header-info text-center">
+        <h3 class="card-title">Register</h3><hr>
+        <p>Already a member? Login here</p>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-just-icon btn-round btn-warning" title="Login">
+          <i class="fa fa-sign-in"></i>
+        </a>
+      </div>
+      <div class="card-body">
+         <form method='POST' action="{{url_for('auth.signup')}}" class="form-signup" id="SignupValidation">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group bmd-form-group">
+                <label for="fname" class="bmd-label-floating">First Name</label>
+                <input name="fname" id="fname" class="form-control" type="text" required autofocus>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group bmd-form-group">
+                <label for="lname" class="bmd-label-floating">Last Name</label>
+                <input name="lname" id="lname" class="form-control" type="text" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group bmd-form-group">
+                <label for="uid" class="bmd-label-floating">User ID</label>
+                <input name="uid" id="uid" class="form-control" type="text" required>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group bmd-form-group">
+                <label for="pwd" class="bmd-label-floating">Password</label>
+                <input name="pwd" id="pwd" class="form-control" type="password" required>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group bmd-form-group">
+                <label for="pwdConfirm" class="bmd-label-floating">Confirm Password</label>
+                <input class="form-control" type="password" equalto="#pwd" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group bmd-form-group">
+                <label for="email" class="bmd-label-floating">Email</label>
+                <input name="email" id="email" class="form-control" type="email" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group bmd-form-group">
+                <label for="phone" class="bmd-label-floating">Phone</label>
+                <input name="phone" id="phone" class="form-control" type="phone" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="dropdown bootstrap-select">
+                <select name="sex" class="selectpicker" data-style="select-with-transition" title="Choose sex" data-size="2" tabindex="-98" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="dropdown bootstrap-select">
+                <select name="dept" class="selectpicker" data-style="select-with-transition" title="Choose department" tabindex="-98" required>
+                  {% for depertment in data %}
+                  <option value="{{ depertment['name'] }}">{{ depertment['name'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <a class="btn btn-primary float-left" href="javascript:history.back()">
+              <span class="btn-label">
+                <i class="material-icons">arrow_left</i>
+              </span>
+            Cancel</a>
+            <button type="submit" class="btn btn-success float-right">
+              <span class="btn-label">
+                <i class="material-icons">check</i>
+              </span>
+            Signup</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+{% block js %}
+  {{ super() }}
+
+  <script>
+    function setFormValidation(id){
+      $(id).validate({
+          highlight: function(element) {
+              $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+              $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+          },
+          success: function(element) {
+              $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+              $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+          },
+          errorPlacement : function(error, element) {
+              $(element).append(error);
+          },
+      });
+    }
+
+    $(document).ready(function() {
+      setFormValidation('#SignupValidation');
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block menu %}Home{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block headerjs %}
+  <script>
+  $(document).ready(function() {
+      $('#home-nav').addClass('active');
+  });
+  </script>
+{% endblock %}
+
+
+{% block body %}
+    <!-- Icons Grid -->
+    <section class="features-icons bg-light text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-screen-desktop m-auto text-primary"></i>
+              </div>
+              <h3>Deploy </h3>
+              <p class="lead mb-0">Deploy VM on the go!</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-layers m-auto text-primary"></i>
+              </div>
+              <h3>Fully Automated</h3>
+              <p class="lead mb-0">Featuring the latest build!</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-check m-auto text-primary"></i>
+              </div>
+              <h3>Easy to Use</h3>
+              <p class="lead mb-0">Dploy a VM just a few mouce click away!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock %}

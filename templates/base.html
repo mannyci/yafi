@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% block head %}
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <meta name="description" content="FLask App">
+  <meta name="author" content="Manas Maiti">
+  <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/static/img/favicon.png">
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/static/css/material-dashboard.css" />
+  <link rel="stylesheet" href="/static/css/material-dashboard.min.css?v=2.0.2" />
+  <link rel="stylesheet" href="/static/css/notify.css" />
+  <!-- Jquery -->
+  <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function () {
+    var sidebarState = localStorage.getItem("sidebar-mini");
+    if (sidebarState == 1) {
+      $("body").addClass('sidebar-mini');
+    } else {
+      $("body").removeClass('sidebar-mini');
+    }
+
+    $('#minimizeSidebar').on('click', function () {
+      $('body').toggleClass('sidebar-mini');
+      var sidebarState = localStorage.getItem("sidebar-mini");
+      if (sidebarState == 1) {
+        localStorage.setItem("sidebar-mini", "0");
+      } else {
+        localStorage.setItem("sidebar-mini", "1");
+      }
+    });
+  });
+
+  </script>
+
+
+
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+  <title>YAFI - {% block title %}Main{% endblock %}</title>
+  {% endblock %}
+  {% block headerjs %}
+  {% endblock %}
+</head>
+
+<body class="">
+{% block sidebar %}
+  <div class="wrapper">
+    <div class="sidebar" data-color="rose" data-background-color="black" data-image="{{ url_for('static', filename='img/sidebar-1.jpg') }}">
+      <div class="logo">
+        <a href="{{ url_for('index') }}" class="simple-text logo-normal">
+          Yafi
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li id="home-nav" class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">
+              <i class="material-icons">home</i>
+              <p>Home</p>
+            </a>
+          </li>
+          <li id="dashboard-nav" class="nav-item">
+            <a class="nav-link" href="{{ url_for('ui.dashboard') }}">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li id="provision-nav" class="nav-item">
+            <a class="nav-link" href="{{ url_for('jobs.provision') }}">
+              <i class="material-icons">dns</i>
+              <p>Provision</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#tablesExamples" aria-expanded="false">
+              <i class="material-icons">grid_on</i>
+              <p> Admin
+                <b class="caret"></b>
+              </p>
+            </a>
+            <div class="collapse" id="tablesExamples" style="">
+                <ul class="nav">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../examples/tables/regular.html">
+                            <span class="sidebar-mini"> RT </span>
+                            <span class="sidebar-normal"> Regular Tables </span>
+                        </a>
+                    </li>
+                    <li id="users-nav" class="nav-item">
+                      <a class="nav-link" href="{{ url_for('admin.users') }}">
+                        <span class="sidebar-mini">
+                          <i class="material-icons">supervisor_account</i>
+                        </span>
+                        <span class="sidebar-normal">Users</span>
+                      </a>
+                    </li>
+                    <li id="departments-nav" class="nav-item">
+                      <a class="nav-link" href="{{ url_for('admin.departments') }}">
+                        <span class="sidebar-mini">
+                          <i class="material-icons">file_copy</i>
+                        </span>
+                        <span class="sidebar-normal">Departments</span>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+          </li>
+          <!-- your sidebar here -->
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+
+
+            <div class="navbar-minimize">
+              <button id="minimizeSidebar" class="btn btn-just-icon btn-white btn-fab btn-round">
+                  <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
+                  <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
+              <div class="ripple-container"></div>
+              </button>
+            <p class="navbar-brand" href="#pablo">{% block menu %}Main{% endblock %}</p>
+            </div>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">notifications</i>
+                  <span class="notification">1</span>
+                  <p class="d-lg-none d-md-block">
+                    Some Actions
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Respose 1</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" data-toggle="dropdown" aria-expanded="false">
+                  <i class="material-icons">person</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
+                  {% if not session['user_id'] %}
+                  <a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a>
+                  {% else %}
+                  <a class="dropdown-item" href="{{ url_for('admin.user_profile', username=session['user_id']) }}">Profile</a>
+                  <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
+                  {% endif %}
+                </div>
+              </li>
+              <!-- your navbar here -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+{% endblock %}
+
+      <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          {% block body %}
+          {% endblock %}
+          {% block footer %}
+          <footer class="footer">
+            <div class="container-fluid">
+              <nav class="float-left">
+                <ul>
+                  <li>
+                    <a href="#">
+                      Mainiained by: Manas Maiti
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="copyright float-right">
+                &copy;
+                <script>
+                  document.write(new Date().getFullYear())
+                </script>
+                Manny
+              </div>
+              <!-- your footer here -->
+            </div>
+          </footer>
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block js %}
+
+  <script src="{{ url_for('static', filename='js/core/popper.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='js/core/bootstrap-material-design.min.js') }}" type="text/javascript"></script>
+  <!-- Plugins -->
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap-selectpicker.js') }}"></script>
+  <!-- MomentJS -->
+  <script src="{{ url_for('static', filename='js/plugins/moment.min.js') }}"></script>
+  <!-- Perfect Scrollbar -->
+  <script src="{{ url_for('static', filename='js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+  <!-- Validator -->
+  <script src="{{ url_for('static', filename='js/plugins/jquery.validate.min.js') }}"></script>
+  <!-- Chartist JS -->
+  <script src="{{ url_for('static', filename='js/plugins/chartist.min.js') }}"></script>
+  <!-- Notifications Plugin    -->
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap-notify.js') }}"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{{ url_for('static', filename='js/core/material-dashboard.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='js/plugins/sweetalert2.js') }}" type="text/javascript"></script>
+
+  {% endblock %}
+</body>
+
+</html>

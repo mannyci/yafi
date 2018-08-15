@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block menu %}Dashboard{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block headerjs %}
+	<script>
+	$(document).ready(function() {
+	    $('#dashboard-nav').addClass('active');
+	});
+	</script>
+
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        var update_stats = function(cpu, virtual, swap) {
+	            var fcpu = parseFloat(cpu).toFixed(2) + '%';
+	            var fvirtual = parseFloat(virtual).toFixed(2) + '%';
+	            var fswap = parseFloat(swap).toFixed(2) + '%';
+
+	            $('#load .current').text(fcpu);
+	            $('#virtual .current').text(fvirtual);
+	            $('#swap .current').text(fswap);
+	        }
+
+	        var wsUrl = 'ws://' + window.location.host
+	        var ws = new WebSocket(wsUrl + '/ui/util')
+
+	        ws.onmessage = function(d) {
+	            info = $.parseJSON(d.data);
+
+	            var load = info.load
+	            var vir = info.vir
+	            var swap = info.swap;
+
+	            update_stats(load, vir, swap);
+	        }
+	    })
+	</script>
+
+{% endblock %}
+
+{% block sidebar %}
+  {{ super() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-lg-3 col-md-6 col-sm-6">
+	  <div class="card card-stats">
+	    <div class="card-header card-header-warning card-header-icon">
+	      <div class="card-icon">
+	        <i class="material-icons">content_copy</i>
+	      </div>
+	      <p class="card-category">Used Space</p>
+	      <h3 class="card-title">49/50
+	        <small>GB</small>
+	      </h3>
+	    </div>
+	    <div class="card-footer">
+	      <div class="stats">
+	        <i class="material-icons text-danger">warning</i>
+	        <a href="#pablo">Get More Space...</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-6">
+	  <div class="card card-stats">
+	    <div class="card-header card-header-success card-header-icon">
+	      <div class="card-icon">
+	        <i class="material-icons">store</i>
+	      </div>
+	      <p class="card-category">Revenue</p>
+	      <h3 class="card-title">$34,245</h3>
+	    </div>
+	    <div class="card-footer">
+	      <div class="stats">
+	        <i class="material-icons">date_range</i> Last 24 Hours
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-6">
+	  <div class="card card-stats">
+	    <div class="card-header card-header-danger card-header-icon">
+	      <div class="card-icon">
+	        <i class="material-icons">info_outline</i>
+	      </div>
+	      <p class="card-category">Fixed Issues</p>
+	      <h3 class="card-title">75</h3>
+	    </div>
+	    <div class="card-footer">
+	      <div class="stats">
+	        <i class="material-icons">local_offer</i> Tracked from Github
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-6">
+	  <div class="card card-stats">
+	    <div class="card-header card-header-info card-header-icon">
+	      <div class="card-icon">
+	        <i class="fa fa-twitter"></i>
+	      </div>
+	      <p class="card-category">Followers</p>
+	      <h3 class="card-title">+245</h3>
+	    </div>
+	    <div class="card-footer">
+	      <div class="stats">
+	        <i class="material-icons">update</i> Just Updated
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<div class="col-md-6">
+	<div class="card card-nav-tabs">
+	  <div class="card-header card-header-info">
+	    <div class="nav-tabs-navigation">
+	      <div class="nav-tabs-wrapper">
+	        <ul class="nav nav-tabs" data-tabs="tabs">
+	          <li class="nav-item">
+				<a class="nav-link active show" href="#agent" data-toggle="tab">
+					<i class="material-icons">slideshow</i>
+					Agent
+				</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#settings" data-toggle="tab">
+	              <i class="material-icons">build</i>
+	              Details
+	            </a>
+	          </li>
+	          <li class="nav-item">
+				<a class="nav-link" href="#load" data-toggle="tab">
+					<i class="material-icons">slideshow</i>
+					System Load
+				</a>
+	          </li>
+	        </ul>
+	      </div>
+	    </div>
+		</div>
+		<div class="card-body ">
+	    <div class="tab-content">
+	        <div class="tab-pane active show" id="agent">
+	          <table class="table table-bordered" style="margin-bottom: 2rem;">
+	            <thead class="thead-light">
+	              <tr>
+	                  <th class="description" colspan="2">Agent Information</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr>
+	                <td style="width: 120px;">Agent Version</td>
+	                <td>{{ agent_version }}</td>
+	              </tr>
+	              <tr>
+	                <td>Agent Uptime</td>
+	                <td>{{ uptime }}</td>
+	              </tr>
+	              <tr>
+	                <td>Python Version</td>
+	                <td>{{ python }}</td>
+	              </tr>
+	              <tr>
+	                <td>PID</td>
+	                <td>{{ pid }}</td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	        <div class="tab-pane" id="settings">
+	          <table class="table table-bordered">
+	            <thead class="thead-light">
+	              <tr>
+	                <th class="description" colspan="2">System Information</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr>
+	                <td style="width: 120px;">Node Name</td>
+	                  <td>{{ node }}</td>
+	              </tr>
+	              <tr>
+	                <td>System</td>
+	                  <td>{{ system }} - {{ release }}</td>
+	              </tr>
+	              <tr>
+	                <td>Processor Type</td>
+	                <td>{{ processor }}</td>
+	              </tr>
+	              <tr>
+	                <td>Accessed From</td>
+	                <td>{{ remote }} - {{ browser }}</td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	        <div class="tab-pane" id="load">
+	          <table class="table table-bordered">
+	            <thead class="thead-light">
+	              <tr>
+	                <th class="description" colspan="2">System Load</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr>
+	                <td style="width: 120px;">CPU Usage</td>
+	                <td id='load'><span class='current'></span></td>
+	              </tr>
+	              <tr>
+	                <td>RAM Usage</td>
+	                <td id='virtual'><span class='current'></span></td>
+	              </tr>
+	              <tr>
+	                <td>Swap Usage</td>
+	                <td id='swap'><span class='current'></span></td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	    </div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+{% endblock %}

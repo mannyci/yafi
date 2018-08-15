@@ -1,0 +1,295 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons);
+[data-notify="container"][class*="alert-pastel-"] {
+	background-color: rgb(241, 242, 240);
+	border-width: 0px;
+	border-left: 15px solid rgb(255, 240, 106);
+	border-radius: 0px;
+	box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.3);
+	letter-spacing: 1px;
+	flex:0 0 41.666667%;
+	max-width:25%;
+	font-family: 'Roboto', serif;
+}
+[data-notify="container"].alert-pastel-info {
+	border-left-color: rgb(143, 252, 247);
+}
+[data-notify="container"].alert-pastel-danger {
+	border-left-color: rgb(255, 103, 76);
+}
+[data-notify="container"].alert-pastel-warning {
+	border-left-color: rgb(255, 179, 40);
+}
+[data-notify="container"].alert-pastel-success {
+	border-left-color: rgb(15, 96, 10);
+}
+[data-notify="container"][class*="alert-pastel-"] > [data-notify="title"] {
+	color: rgb(80, 80, 57);
+	display: block;
+	font-weight: 700;
+	margin-bottom: 5px;
+}
+[data-notify="container"][class*="alert-pastel-"] > [data-notify="message"] {
+	font-weight: 400;
+}
+
+/*Job status styles*/
+
+.jobstate {
+  height: 0px;
+  border-top:8px solid #a9b0a9;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.jobstate-success {
+  border-top-color: #13b713;
+}
+
+.jobstate-warning {
+	border-top-color: #aea614
+}
+
+/*Log styles*/
+.Stdout {
+ height:auto;
+ width:100%;
+ display:-ms-flexbox;
+ display:flex;
+ -ms-flex-direction:column;
+ flex-direction:column;
+ -ms-flex-align:stretch;
+ align-items:stretch
+}
+.Stdout-toolbar {
+ -ms-flex:initial;
+ flex:initial;
+ display:-ms-flexbox;
+ display:flex;
+ border-bottom:0;
+ border-radius:5px;
+ border-bottom-left-radius:0;
+ border-bottom-right-radius:0;
+ user-select:none;
+ -moz-user-select:none;
+ -webkit-user-select:none;
+ -ms-user-select:none
+}
+.Stdout-toolbarNumberColumn {
+ background-color:#ebebeb;
+ color:#b7b7b7;
+ -ms-flex:initial;
+ flex:initial;
+ display:-ms-flexbox;
+ display:flex;
+ -ms-flex-pack:justify;
+ justify-content:space-between;
+ width:70px;
+ padding-bottom:10px;
+ padding-left:8px;
+ padding-right:8px;
+ padding-top:10px;
+ border-top-left-radius:5px;
+ z-index:1;
+ border-right:1px solid #d7d7d7
+}
+.Stdout-expandAllButton {
+ height:18px;
+ width:18px;
+ padding-left:4px;
+ padding-top:1px;
+ border-radius:50%;
+ background-color:#fff;
+ font-size:12px;
+ cursor:pointer;
+ color:#848992
+}
+.Stdout-expandAllButton:hover .Stdout-expandAllIcon,.Stdout-expandAllIcon:hover {
+ color:#161b1f
+}
+.Stdout-toolbarStdoutColumn {
+ white-space:normal;
+ -ms-flex:1;
+ flex:1;
+ display:-ms-flexbox;
+ display:flex;
+ -ms-flex-pack:end;
+ justify-content:flex-end;
+ padding-right:10px;
+ background-color:#fcfcfc;
+ border-top-right-radius:5px
+}
+.Stdout-followButton {
+ cursor:pointer;
+ height:18px;
+ width:18px;
+ padding:1px 0 0 4px;
+ border-radius:50%;
+ margin-top:10px;
+ font-size:11px;
+ background-color:#848992;
+ color:#fff
+}
+.Stdout-followIcon {
+ color:#fff
+}
+.Stdout-followButton:hover {
+ background-color:#161b1f
+}
+.Stdout-followButton.is-engaged {
+ background-color:#337ab7;
+ color:#fff
+}
+.Stdout-followButton.is-engaged .Stdout-followIcon {
+ color:#fff
+}
+.Stdout-followButton.is-engaged:hover {
+ background-color:#848992
+}
+.Stdout-followButton.is-engaged .Stdout-followIcon:hover,.Stdout-followButton.is-engaged:hover .Stdout-followIcon {
+ color:#d7d7d7
+}
+.Stdout-stdoutContainer {
+ -ms-flex:1;
+ flex:1;
+ position:relative;
+ background-color:#fcfcfc;
+ overflow-y:scroll;
+ overflow-x:hidden
+}
+.Stdout-numberColumnPreload {
+ background-color:#ebebeb;
+ border-right:1px solid #d7d7d7;
+ position:absolute;
+ height:100%;
+ width:70px
+}
+.Stdout-aLineOfStdOut {
+ display:-ms-flexbox;
+ display:flex;
+ font-family:Monaco,Menlo,Consolas,"Courier New",monospace
+}
+.Stdout-lineExpander {
+ text-align:left;
+ padding-left:11px;
+ margin-right:auto
+}
+.Stdout-lineExpanderIcon {
+ font-size:19px;
+ cursor:pointer
+}
+.Stdout-lineExpanderIcon:hover {
+ color:#161b1f
+}
+.Stdout-lineNumberColumn {
+ display:-ms-flexbox;
+ display:flex;
+ background-color:#ebebeb;
+ text-align:right;
+ padding-right:10px;
+ padding-top:2px;
+ padding-bottom:2px;
+ width:75px;
+ -ms-flex:1 0 70px;
+ flex:1 0 70px;
+ user-select:none;
+ -moz-user-select:none;
+ -webkit-user-select:none;
+ -ms-user-select:none;
+ z-index:1;
+ border-right:1px solid #d7d7d7;
+ color:#848992
+}
+.Stdout-stdoutColumn {
+ padding-left:20px;
+ padding-right:20px;
+ padding-top:2px;
+ padding-bottom:2px;
+ color:#707070;
+ display:inline-block;
+ white-space:pre-wrap;
+ word-break:break-all;
+ width:100%;
+ background-color:#fcfcfc
+}
+.Stdout-stdoutColumn--tooMany {
+ font-weight:700;
+ text-transform:uppercase;
+ color:#d9534f
+}
+.Stdout-stdoutColumn--clickable {
+ cursor:pointer
+}
+.Stdout-aLineOfStdOut:hover,.Stdout-aLineOfStdOut:hover .Stdout-lineNumberColumn,.Stdout-aLineOfStdOut:hover .Stdout-stdoutColumn {
+ background-color:#fff
+}
+.Stdout-aLineOfStdOut:hover .Stdout-lineNumberColumn {
+ border-right:1px solid #fff
+}
+.Stdout-footer {
+ height:20px;
+ border-bottom-right-radius:5px;
+ border-bottom-left-radius:5px;
+ background-color:#fcfcfc;
+ border-top:0;
+ border-radius:5px;
+ border-top-left-radius:0;
+ border-top-right-radius:0;
+ overflow:hidden;
+ margin-top:-1px
+}
+.Stdout-footerNumberColumn {
+ background-color:#ebebeb;
+ width:70px;
+ height:100%;
+ border-right:1px solid #d7d7d7
+}
+.Stdout-followAnchor {
+ height:0
+}
+.Stdout-toTop {
+ color:#848992;
+ cursor:pointer;
+ font-family:monaco;
+ font-size:10px;
+ margin-right:20px;
+ text-align:right;
+ display:-ms-flexbox;
+ display:flex
+}
+.Stdout-toTop span {
+ margin-left:auto
+}
+.Stdout-toTop--numberColumn {
+ background:#ebebeb;
+ height:40px;
+ width:70px;
+ border-right:1px solid #d7d7d7
+}
+.Stdout-toTop:hover {
+ color:#161b1f
+}
+.Stdout-cappedLine {
+ color:#b7b7b7;
+ font-style:italic
+}
+@media (max-width:1200px) {
+ .Stdout-numberColumnPreload {
+  display:none
+ }
+ .Stdout-topAnchor {
+  position:static;
+  width:100%;
+  top:-20px;
+  margin-top:-250px;
+  margin-bottom:250px
+ }
+ .Stdout-followAnchor {
+  height:0
+ }
+ .Stdout-stdoutContainer {
+  overflow-y:auto
+ }
+ .Stdout-lineAnchor {
+  display:none!important
+ }
+}

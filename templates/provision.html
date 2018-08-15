@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block title %}Provision{% endblock %}
+{% block menu %}Provision{% endblock %}
+{% set active_page = "provision" %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block headerjs %}
+<script>
+$(document).ready(function() {
+    $('#provision-nav').addClass('active');
+});
+</script>
+
+<script>
+
+$(document).ready(function($) {
+  $(document).on('submit', '#submitCommand', function(event) {
+    event.preventDefault();
+
+    var command = document.getElementById('command');
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{{ url_for('jobs.provision') }}', false);
+    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    var params = "command=" + command.value;
+    console.log('Submiting data: ' + params);
+    xhr.send(params);
+    if (xhr.status === 200) {
+      response = JSON.parse(xhr.responseText);
+      console.log('Retruned JobID: ' + response['job_id']);
+      $.notify({
+        message: "<strong>Success: </strong>Job submitted with ID - " + response['job_id']
+      },{
+        type: 'pastel-info',
+      });
+      // Update job details
+      var jobID = document.getElementById('jobID');
+      var runCommand = document.getElementById('runCommand');
+      jobID.innerHTML = ('Job ID: ' + response['job_id'])
+      runCommand.innerHTML = ('Command: ' + response['command'])
+      // Update job status on command exit code
+      if (response['result'] == 0) {
+        document.getElementById("jobStatus").className = "jobstate jobstate-success";
+        document.getElementById("logDetails").className = "text-success collapsed";
+      }else {
+        document.getElementById("jobStatus").className = "jobstate jobstate-warning";
+      }
+      handleOutput(response['job_id'])
+    } else {
+      $.notify({
+        message: "<strong>Error: </strong>Something went wrong, response - " + xhr.status
+      },{
+        type: 'pastel-danger',
+      });
+    }
+    return false;
+  });
+});
+
+function handleOutput(job_id) {
+  var output = document.getElementById('commandOut');
+  var xhr = new XMLHttpRequest();
+  var streamUrl = "{{ url_for('jobs.stream') }}"
+  var params = "job_id=" + job_id;
+  console.log('Loading log for URL: ' + streamUrl + params);
+  xhr.open('GET', streamUrl + '?' + params, true);
+  xhr.send(params);
+  var position = 0;
+
+  function handleNewData() {
+    var messages = xhr.responseText.split('\n');
+    messages.slice(position, -1).forEach(function(value) {
+      var item = document.createElement('li');
+      item.textContent = value;
+      output.appendChild(item);
+    });
+    position = messages.length - 1;
+  }
+
+  var timer;
+  timer = setInterval(function() {
+    // check the response for new data
+    handleNewData();
+    // stop checking once the response has ended
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      clearInterval(timer);
+      // latest.textContent = 'Done';
+    }
+  }, 1000);
+}
+
+</script>
+
+{% endblock %}
+
+{% block sidebar %}
+  {{ super() }}
+{% endblock %}
+
+{% block body %}
+<div class="col-md-12 ml-auto mr-auto">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Run your command here</h4>
+      <p class="card-category">
+        More information here
+      </p>
+    </div>
+    <div class="card-body">
+      <form id="submitCommand">
+        <div class="form-group">
+          <label for="command" class="bmd-label-floating">Command to run</label>
+          <input name="command" id="command" class="form-control" type="text" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success float-right">Run</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header">
+
+      <hr class="jobstate" id="jobStatus">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 id="jobID" class="card-title"></h4>
+          <p class="card-category">More information here</p>
+        </div>
+        <div class="col-md-6">
+          <h4 id="runCommand" class="card-title"></h4>
+          <a href="#" class="btn-just-icon btn-warning" title="Raw logs">
+            <i class="material-icons float-right">wrap_text</i>
+          </a>
+          <a href="#" class="btn-just-icon btn-warning" title="Scroll to top">
+            <i class="material-icons float-right">vertical_align_top</i>
+          </a>
+          <a href="#" class="btn-just-icon btn-warning" title="Scroll to bottom">
+            <i class="material-icons float-right">vertical_align_bottom</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="Stdout">
+      <div class="Stdout-toolbar">
+        <div class="Stdout-toolbarNumberColumn">
+          <div class="Stdout-expandAllButton" data-toggle="collapse" data-target="#stdoutLines" rel="tooltip" title="" data-original-title="Expand all lines of standard out" data-placement="top" title="">
+            <i class="JobResultsStdOut-expandAllIcon fa fa-plus">
+            </i>
+          </div>
+        </div>
+        <div class="Stdout-toolbarStdoutColumn">
+          <div class="Stdout-followButton" rel="tooltip" title="" data-original-title="Jump to last line of standard out" data-tip-watch="followTooltip" data-placement="left" data-trigger="hover" data-container="body" title="">
+            <i class="Stdout-followIcon fa fa-arrow-down">
+            </i>
+          </div>
+        </div>
+      </div>
+
+      <div class="Stdout-stdoutContainer collapse show;" id="stdoutLines">
+        <div id="topAnchor" class="Stdout-topAnchor"></div>
+        <div class="Stdout-numberColumnPreload"></div>
+        <div class="Stdout-aLineOfStdOut ng-hide">
+          <div class="Stdout-lineNumberColumn">
+            <span class="Stdout-lineExpander">  </span>
+          </div>
+        </div>
+        <!-- Log lines with numbers -->
+        <div class="Stdout-aLineOfStdOut">
+          <div id="lineAnchor" class="Stdout-lineAnchor"></div>
+          <div class="Stdout-lineNumberColumn">
+            <span class="Stdout-lineExpander"></span>1
+          </div>
+          <div class="Stdout-stdoutColumn"><span ng-non-bindable="">First Line</span></div>
+        </div>
+        <div class="Stdout-aLineOfStdOut">
+          <div class="Stdout-lineNumberColumn">
+            <span class="Stdout-lineExpander"></span>2
+          </div>
+          <div class="Stdout-stdoutColumn"><span ng-non-bindable="">Second Line</span></div>
+        </div>
+        <div class="Stdout-footerNumberColumn"></div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+{% endblock %}

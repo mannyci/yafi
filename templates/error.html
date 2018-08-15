@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ type }}{% endblock %}
+{% block menu %}Error: {{ type }}{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ super() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="card card-nav-tabs">
+	<div class="card-header card-header-warning">
+	  <div class="card-icon card-header-info">
+	    <i class="material-icons">flight</i>
+	  </div>
+	  <h4 class="card-title">Oh! It's a {{ type }}!</h4>
+	</div>
+	<div class="card-body text-center">
+		<h4 class="card-title">The page just moved to another planet</h4>
+		<p class="card-text">{{ e }}</p>
+		<a href="javascript:history.back()" class="btn btn-primary">
+		<span class="btn-label">
+        	<i class="material-icons">arrow_left</i>
+        </span>
+		Go Back</a>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+{% endblock %}
