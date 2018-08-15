@@ -30,7 +30,7 @@ app.register_blueprint(jobs, url_prefix='/jobs')
 # Flask login
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "views.auth.login"
+login_manager.login_view = "auth.login"
 
 class User(UserMixin):
 
