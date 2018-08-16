@@ -20,6 +20,7 @@ class myThread (threading.Thread):
         threading.Thread.__init__(self)
         self.cmd = cmd
         self.job_id = job_id
+    @jobs.route('/status', methods=['GET', 'POST'])
     def run(self):
         logfile = os.path.join('jobs', self.job_id + '.txt')
         start = datetime.datetime.now()
@@ -45,9 +46,9 @@ def provision():
     elif request.method == 'POST':
         job_id = uuid.uuid4().hex[0:20]
         command = request.form['command']
-        result = comm.apply_async((command, job_id), )
-        cjob = celery.run(command, job_id)
-        print cjob
+        # result = comm.apply_async((command, job_id), )
+        # cjob = celery.run(command, job_id)
+        # print cjob
         logging.info("Job ID: %s for command: %s", job_id, command)
         th = myThread(command, job_id)
         try:

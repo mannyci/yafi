@@ -74,7 +74,7 @@ function handleOutput(job_id) {
       item.setAttribute("class","Stdout-aLineOfStdOut");
       item.innerHTML = `
           <div id="lineAnchor" class="Stdout-lineAnchor"></div>
-          <a class="Stdout-lineNumberColumn" href="#${line}">
+          <a class="Stdout-lineNumberColumn" href="#L${line}">
             <span class="Stdout-lineExpander"></span>${line}
           </a>
           <div class="Stdout-stdoutColumn"><span ng-non-bindable="">${value}</span></div>
@@ -172,26 +172,8 @@ function handleOutput(job_id) {
       <div class="Stdout-stdoutContainer collapse show" id="stdoutLines">
         <div id="topAnchor" class="Stdout-topAnchor"></div>
         <div class="Stdout-numberColumnPreload"></div>
-        <div class="Stdout-aLineOfStdOut ng-hide">
-          <div class="Stdout-lineNumberColumn">
-            <span class="Stdout-lineExpander">  </span>
-          </div>
-        </div>
         <!-- Log lines with numbers -->
-        <div class="Stdout-aLineOfStdOut">
-          <div id="lineAnchor" class="Stdout-lineAnchor"></div>
-          <div class="Stdout-lineNumberColumn">
-            <span class="Stdout-lineExpander"></span>1
-          </div>
-          <div class="Stdout-stdoutColumn"><span ng-non-bindable="">First Line</span></div>
-        </div>
-        <div class="Stdout-aLineOfStdOut">
-          <div class="Stdout-lineNumberColumn">
-            <span class="Stdout-lineExpander"></span>2
-          </div>
-          <div class="Stdout-stdoutColumn"><span ng-non-bindable="">Second Line</span></div>
-        </div>
-        <div class="Stdout-footerNumberColumn"></div>
+
       </div>
     </div>
 
