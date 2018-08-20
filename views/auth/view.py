@@ -4,6 +4,10 @@ from flask import Flask, Response, redirect, url_for, request, session, abort, r
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_bcrypt import Bcrypt
 import logging
+import models.database
+
+# Initialize the database
+db = models.database.DB()
 
 auths = Blueprint('auth', __name__)
 bcrypt = Bcrypt()

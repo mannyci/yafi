@@ -10,7 +10,7 @@ import logging
 
 class DB(object):
 	def __init__(self):
-		self.default_conf = os.path.join('app.cfg')
+		self.default_conf = os.path.join('etc', 'app.cfg')
 		conf_present = os.path.isfile(self.default_conf)
 		if not conf_present:
 			logging.critical("Database config not found at:", os.path.abspath(self.default_conf))

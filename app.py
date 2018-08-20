@@ -2,7 +2,7 @@ import os
 import sys
 import datetime
 import platform
-import logging
+# import logging
 from flask import Flask, Response, redirect, url_for, request, session, abort, render_template, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 
@@ -12,12 +12,10 @@ from views.auth.view import auths
 from views.admin.view import admin
 from views.jobs.view import jobs
 
-# Initialize database
-import models.database
-import views
-db = models.database.DB()
-views.auth.view.db = db
-views.admin.view.db = db
+# # Initialize database
+# import models.database
+# import views
+# db = models.database.DB()
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.secret_key = os.urandom(24)
@@ -66,3 +64,5 @@ def page_not_found(e):
     return render_template('error.html', error=e, type='500'), 500
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
