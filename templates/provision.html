@@ -74,7 +74,7 @@ function handleOutput(job_id) {
       item.setAttribute("class","Stdout-aLineOfStdOut");
       item.innerHTML = `
           <div id="lineAnchor" class="Stdout-lineAnchor"></div>
-          <a class="Stdout-lineNumberColumn" href="#L${line}">
+          <a id="L${line}" class="Stdout-lineNumberColumn" href="#L${line}">
             <span class="Stdout-lineExpander"></span>${line}
           </a>
           <div class="Stdout-stdoutColumn"><span ng-non-bindable="">${value}</span></div>
