@@ -14,10 +14,6 @@ from views.auth.view import auths
 from views.admin.view import admin
 from views.jobs.view import jobs
 
-# # Initialize database
-import models.database
-db = models.database.DB()
-
 defaults = {
     u'host': u'manny.com',
     u'port': u'5000',
@@ -26,10 +22,13 @@ defaults = {
     u'logfile': u'var/app.log',
 }
 
-class conf(object):
+class initapp(object):
     """docstring for conf"""
-    # def __init__(self):
-    #     self.read_config()
+    def __init__(self):
+        self.read_config()
+        self.start_log()
+        self.startapp()
+
     def read_config(self):
         # Read configuration from config file
         self.default_conf = os.path.join('etc', 'app.cfg')
@@ -42,8 +41,6 @@ class conf(object):
         except Exception as e:
             print "Config error:",e
             sys.exit(1)
-
-class log(object):
 
     def start_log(self):
         self.default_conf = os.path.join('etc', 'app.cfg')
@@ -64,6 +61,13 @@ class log(object):
         for h in handler:
             h.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
             self.logger.addHandler(h)
+
+    def startapp(self):
+        logging.info("Starting app: Host=%s Port=%s", self.host,self.port)
+        try:
+            app.run(host=self.host,port=self.port,debug=False)
+        except Exception as e:
+            logging.error("%s", e)
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.secret_key = os.urandom(24)
@@ -111,8 +115,5 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template('error.html', error=e, type='500'), 500
 
-
 if __name__ == '__main__':
-    conf().read_config()
-    log().start_log()
-    app.run(debug=True)
+    initapp()
