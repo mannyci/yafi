@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}User: {{ data[0]['first_name'] }}{% endblock %}
+{% block title %}User: {{ user.fname }}{% endblock %}
 {% block menu %}User Profile{% endblock %}
 {% block head %}
   {{ super() }}
@@ -11,36 +11,30 @@
 
 {% block body %}
 
-{% for row in data %}
-
 <div class="col-md-6 mx-auto">
   <div class="card card-profile">
     <div class="card-avatar">
       <img class="img" src="{{ url_for('static', filename='img/faces/marc.jpg') }}">
     </div>
     <div class="card-body">
-      <h4 class="card-title">{{ row['first_name'] + ' ' + row['last_name'] }}</h4>
+      <h4 class="card-title">{{ user.fname + ' ' + user.lname }}</h4>
       <table class="table">
         <tbody>
           <tr>
-            <td>Department</td>
-            <td>{{ row['depertment'] }}</td>
-          </tr>
-          <tr>
             <td>Gender</td>
-            <td>{{ row['sex'] }}</td>
+            <td>{{ user.sex }}</td>
           </tr>
           <tr>
             <td>Email</td>
-            <td><a href="mailto:{{ row['email'] }}">{{ row['email'] }}</a></td>
+            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
           </tr>
           <tr>
             <td>Phone Number</td>
-            <td>{{ row['phone'] }}</td>
+            <td>{{ user.phone }}</td>
           </tr>
         </tbody>
       </table>
-      <a href="{{ url_for('admin.edit', username=session['user_id']) }}" class="btn btn-primary pull-right">
+      <a href="{{ url_for('admin.edit', username=session['user']) }}" class="btn btn-primary pull-right">
         <span class="btn-label">
           <i class="material-icons">edit</i>
         </span>
@@ -53,7 +47,6 @@
     </div>
   </div>
 </div>
-{% endfor %}
 
 {% endblock %}
 
