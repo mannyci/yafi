@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %}User: {{ user_data[0]['first_name'] }}{% endblock %}
-{% block menu %}User: {{ user_data[0]['first_name'] }}{% endblock %}
+{% block title %}User: {{ user.fname }}{% endblock %}
+{% block menu %}User: {{ user.fname }}{% endblock %}
 {% block head %}
 	{{ super() }}
 {% endblock %}
@@ -11,7 +11,7 @@
 
 {% block body %}
 
-{% for row in user_data %}
+
 <div class="row">
 	<div class="col-md-8">
 	  <div class="card card-nav-tabs">
@@ -27,13 +27,13 @@
 					<div class="col-sm-6" >
 						<div class="form-group">
 						  <label>First Name</label>
-						  <input name="name" type="text" placeholder="" value="{{ row['first_name'] }}" class="form-control" required>
+						  <input name="name" type="text" placeholder="" value="{{ user.fname }}" class="form-control" required>
 						</div>
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
 						  <label>Last Name</label>
-						  <input name="name" type="text" placeholder="" value="{{ row['last_name'] }}" class="form-control" required>
+						  <input name="name" type="text" placeholder="" value="{{ user.lname }}" class="form-control" required>
 						</div>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 				  <div class="col-sm-6">
 					<div class="form-group">
 						<label>User ID</label>
-						<input name="username" type="text" placeholder="" value="{{ row['id'] }}" class="form-control" required>
+						<input name="username" type="text" placeholder="" value="{{ user.username }}" class="form-control" required>
 					</div>
 					</div>
 					<div class="col-sm-6">
@@ -55,17 +55,17 @@
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label>Email Address</label>
-							<input name="email" type="email" placeholder="" value="{{ row['email'] }}" class="form-control">
+							<input name="email" type="email" placeholder="" value="{{ user.email }}" class="form-control">
 						</div>
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label>Phone</label>
-							<input name="phone" type="text" placeholder="" value="{{ row['phone'] }}" class="form-control">
+							<input name="phone" type="text" placeholder="" value="{{ user.phone }}" class="form-control">
 						</div>
 					</div>
 				</div>
-				<div class="row">
+<!-- 				<div class="row">
 					<div class="col-sm-4">
 						<div class="dropdown bootstrap-select">
 						  <select class="selectpicker" data-style="select-with-transition" title="Choose department" tabindex="-98" required>
@@ -79,7 +79,7 @@
 							</select>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<a class="btn btn-primary float-left" href="javascript:history.back()">
 					<span class="btn-label">
 						<i class="material-icons">arrow_left</i>
@@ -126,9 +126,6 @@
 		</div>
 	</div>
 </div>
-
-
-{% endfor %}
 
 {% endblock %}
 
