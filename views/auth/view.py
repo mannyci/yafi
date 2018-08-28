@@ -2,15 +2,11 @@
 from flask import Blueprint
 from flask import Flask, Response, redirect, url_for, request, session, abort, render_template, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
-from flask_bcrypt import Bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 import logging
-import models.database
-
-# Initialize the database
-db = models.database.DB()
+from models.database import db, Users
 
 auths = Blueprint('auth', __name__)
-bcrypt = Bcrypt()
 
 class User(UserMixin):
 
@@ -24,25 +20,22 @@ def login():
     elif request.method == 'POST':
         username = request.form['username']
         password = request.form['pwd']
-        try:
-            user_valid = db.check_user(username)
-            if not user_valid:
-                raise ValueError('User Not present')
-        except (ValueError):
+        user = Users.query.filter_by(username=username).first()
+        if not user:
             flash('Not a valid user', 'error')
             return render_template('login.html')
         else:
-            check_pass = db.check_user_pass(username)
-            result = bcrypt.check_password_hash(check_pass, password)
-            if result == True:
+            pw_hash = user.password
+            if check_password_hash(pw_hash, password):
+                # The hash matches the password in the database log the user in
+                session['user'] = username
+                flash('Login was succesfull')
                 logging.info("Authenticated session: %s", username)
                 user = User(username)
-                user_data = db.get_user_profile(username)
                 login_user(user)
             else:
                 flash('Entered password does not match', 'error')
                 return render_template('login.html')
-
     if request.args.get("next") == None:
         return redirect(url_for('index'))
     else:
@@ -59,22 +52,18 @@ def logout():
 @auths.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
-        return render_template('signup.html', data=db.get_dept())
+        return render_template('signup.html')
     elif request.method == 'POST':
         fname = request.form['fname']
         lname = request.form['lname']
         email = request.form['email']
         username = request.form['uid']
-        pw_hash = bcrypt.generate_password_hash(request.form['pwd'])
+        password = generate_password_hash(request.form['pwd'])
         phone = request.form['phone']
-        dept = request.form['dept']
         sex = request.form['sex']
         if not session.get("logged_in"):
-            user_add = db.insert_user(username,fname,lname,email,pw_hash,phone,sex,dept)
-            if user_add:
-                logging.info("New user added: %s", username)
-                flash('Signed up successfully.', 'success')
-            else:
-                logging.warning("User add failed: %s", username)
-                flash('Something went wrong.', 'error')
-        return redirect(url_for('signup'))
+            user = Users(username=username,fname=fname,lname=lname,email=email,password=password,phone=phone,sex=sex)
+            db.session.add(user)
+            db.session.commit()
+            flash('Signed up successfully.', 'success')
+        return redirect(url_for('auth.signup'))

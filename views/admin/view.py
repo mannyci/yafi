@@ -1,11 +1,7 @@
 from flask import Blueprint
 from flask import Flask, Response, redirect, url_for, request, session, abort, render_template, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_required
-import models.database
-
-# Initialize the database
-db = models.database.DB()
-
+from models.database import db
 
 admin = Blueprint('admin', __name__)
 

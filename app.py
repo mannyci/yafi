@@ -5,8 +5,12 @@ import platform
 import ConfigParser
 from logging.handlers import RotatingFileHandler
 import logging
-from flask import Flask, Response, redirect, url_for, request, session, abort, render_template, flash, jsonify
+import config
+from flask import Flask, redirect, url_for, request, session, abort, render_template, jsonify
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask_admin import Admin
+from flask_sqlalchemy import SQLAlchemy
+from models.database import db
 
 # Import blueprints
 from views.ui.view import ui
@@ -27,6 +31,7 @@ class initapp(object):
     def __init__(self):
         self.read_config()
         self.start_log()
+        self.startdb()
         self.startapp()
 
     def read_config(self):
@@ -62,6 +67,11 @@ class initapp(object):
             h.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
             self.logger.addHandler(h)
 
+    def startdb(self):
+        logging.info("Initializing database: Host=%s User=%s", config.dbhost, config.dbuser)
+        db.init_app(app)
+        db.create_all(app=app)
+
     def startapp(self):
         logging.info("Starting app: Host=%s Port=%s", self.host,self.port)
         try:
@@ -70,7 +80,12 @@ class initapp(object):
             logging.error("%s", e)
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+app.config.from_object('config')
 app.secret_key = os.urandom(24)
+
+# admin = Admin(app, name='Dashboard', url='/admin', endpoint='admin')
+
+
 # Blueprints here
 app.register_blueprint(ui, url_prefix='/ui')
 app.register_blueprint(auths, url_prefix="/auth")
