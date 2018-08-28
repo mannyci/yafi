@@ -45,7 +45,7 @@ def login():
 @login_required
 def logout():
     logging.info("User logged out: %s", session['user_id'])
-    session.pop('username', None)
+    session.pop('user')
     logout_user()
     return redirect(url_for('index'))
 

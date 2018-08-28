@@ -9,7 +9,6 @@ import config
 from flask import Flask, redirect, url_for, request, session, abort, render_template, jsonify
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_admin import Admin
-from flask_sqlalchemy import SQLAlchemy
 from models.database import db
 
 # Import blueprints
