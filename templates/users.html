@@ -40,7 +40,6 @@
 	            <th>First Name</th>
 	            <th>Last Name</th>
 	            <th>User ID</th>
-	            <th>Department</th>
 	            <th>Email</th>
 	            <th>Contact</th>
 	            <th>Actions</th>
@@ -49,14 +48,13 @@
           <tbody>
           	{% for row in data %}
 	          <tr>
-	            <td>{{ row['first_name'] }}</td>
-	            <td>{{ row['last_name'] }}</td>
-	            <td>{{ row['id'] }}</td>
-	            <td>{{ row['depertment'] }}</td>
+	            <td>{{ row['fname'] }}</td>
+	            <td>{{ row['lname'] }}</td>
+	            <td>{{ row['username'] }}</td>
 	            <td><a href="mailto:{{ row['email']}}">{{ row['email'] }}</a></td>
 	            <td>{{row['phone']}}</td>
 	            <td class="td-actions">
-	              <a href="{{ url_for('admin.edit', username=row['id']) }}" class="btn btn-warning">
+	              <a href="{{ url_for('admin.edit', username=row['username']) }}" class="btn btn-warning">
                 <i class="material-icons">edit</i></a>
 	              <a href="#" rel="tooltip" class="btn btn-danger">
                 <i class="material-icons">close</i></a>
