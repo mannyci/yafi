@@ -159,10 +159,10 @@
                   <i class="material-icons">person</i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-                  {% if not session['user_id'] %}
+                  {% if not session['user'] %}
                   <a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a>
                   {% else %}
-                  <a class="dropdown-item" href="{{ url_for('admin.user_profile', username=session['user_id']) }}">Profile</a>
+                  <a class="dropdown-item" href="{{ url_for('admin.user_profile', username=session['user']) }}">Profile</a>
                   <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
                   {% endif %}
                 </div>
