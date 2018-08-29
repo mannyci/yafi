@@ -14,7 +14,7 @@ from models.database import db
 # Import blueprints
 from views.ui.view import ui
 from views.auth.view import auths
-from views.admin.view import admin
+from views.profile.view import profile
 from views.jobs.view import jobs
 
 defaults = {
@@ -88,7 +88,7 @@ app.secret_key = os.urandom(24)
 # Blueprints here
 app.register_blueprint(ui, url_prefix='/ui')
 app.register_blueprint(auths, url_prefix="/auth")
-app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(profile, url_prefix='/profile')
 app.register_blueprint(jobs, url_prefix='/jobs')
 
 # Flask login

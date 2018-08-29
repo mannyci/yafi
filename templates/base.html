@@ -100,19 +100,11 @@
                         </a>
                     </li>
                     <li id="users-nav" class="nav-item">
-                      <a class="nav-link" href="{{ url_for('admin.users') }}">
+                      <a class="nav-link" href="{{ url_for('profile.users') }}">
                         <span class="sidebar-mini">
                           <i class="material-icons">supervisor_account</i>
                         </span>
                         <span class="sidebar-normal">Users</span>
-                      </a>
-                    </li>
-                    <li id="departments-nav" class="nav-item">
-                      <a class="nav-link" href="{{ url_for('admin.departments') }}">
-                        <span class="sidebar-mini">
-                          <i class="material-icons">file_copy</i>
-                        </span>
-                        <span class="sidebar-normal">Departments</span>
                       </a>
                     </li>
                 </ul>
@@ -166,7 +158,7 @@
                   {% if not session['user'] %}
                   <a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a>
                   {% else %}
-                  <a class="dropdown-item" href="{{ url_for('admin.user_profile', username=session['user']) }}">Profile</a>
+                  <a class="dropdown-item" href="{{ url_for('profile.user_profile', username=session['user']) }}">Profile</a>
                   <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
                   {% endif %}
                 </div>

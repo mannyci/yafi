@@ -29,28 +29,4 @@ class Users(Base):
 	def __repr__(self):
 	    return self.username
 
-	def get_user_profile(self,username):
-	    self.cur.execute("""SELECT id,first_name,last_name,email,phone,depertment,sex FROM users WHERE id='%s'""" % (username)) 
-	    rows = self.cur.fetchall()
-	    return rows
 
-	def get_users(self):
-	    self.cur.execute("""SELECT id,first_name,last_name,email,phone,depertment FROM users""")
-	    rows = self.cur.fetchall()
-	    return rows
-
-	def get_dept(self):
-	    self.cur.execute("""SELECT serial,name,description from depertment""")
-	    rows = self.cur.fetchall()
-	    return rows
-
-	def add_dept(self,name,desc):
-	    try:
-	        self.cur.execute(
-	          """INSERT INTO depertment (name, description)
-	          VALUES (%s, %s)""", (name, desc))
-	        self.db.commit()
-	        return True
-	    except Exception,e:
-			logging.error(e)
-			return False

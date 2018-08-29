@@ -54,7 +54,7 @@
 	            <td><a href="mailto:{{ row['email']}}">{{ row['email'] }}</a></td>
 	            <td>{{row['phone']}}</td>
 	            <td class="td-actions">
-	              <a href="{{ url_for('admin.edit', username=row['username']) }}" class="btn btn-warning">
+	              <a href="{{ url_for('profile.edit', username=row['username']) }}" class="btn btn-warning">
                 <i class="material-icons">edit</i></a>
 	              <a href="#" rel="tooltip" class="btn btn-danger">
                 <i class="material-icons">close</i></a>

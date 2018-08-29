@@ -7,12 +7,12 @@
 # SQLAlchemy ORM, Flask-Mail and WTForms are used in supporting roles, as well.
 
 from flask import Flask, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.security import current_user, login_required, RoleMixin, Security, \
+from flask_sqlalchemy import SQLAlchemy
+from flask_security import current_user, login_required, RoleMixin, Security, \
     SQLAlchemyUserDatastore, UserMixin, utils
 from flask_mail import Mail
-from flask.ext.admin import Admin
-from flask.ext.admin.contrib import sqla
+from flask_admin import Admin
+from flask_admin.contrib import sqla
 
 from wtforms.fields import PasswordField
 
@@ -27,13 +27,13 @@ app.config['SECRET_KEY'] = 'super-secret'
 # You'll need to connect as a user with sufficient privileges to create tables and read and write to them.
 # Replace this with your own database connection string.
 #xxxxx
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:xxxxxxxx@localhost/flask_example'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://flask:Manny#3heart@localhost/new'
 
 # Set config values for Flask-Security.
 # We're using PBKDF2 with salt.
 app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
 # Replace this with your own salt.
-app.config['SECURITY_PASSWORD_SALT'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+app.config['SECURITY_PASSWORD_SALT'] = '12'
 
 # Flask-Security optionally sends email notification to users upon registration, password reset, etc.
 # It uses Flask-Mail behind the scenes.
@@ -196,7 +196,7 @@ admin.add_view(RoleAdmin(Role, db.session))
 # If running locally, listen on all IP addresses, port 8080
 if __name__ == '__main__':
     app.run(
-        host='0.0.0.0',
+        host='manny.com',
         port=int('8080'),
         debug=app.config['DEBUG']
 )
