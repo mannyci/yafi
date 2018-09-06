@@ -25,8 +25,15 @@ class Users(Base):
 	password = db.Column(db.String(300))  # incase password hash becomes too long
 	phone = db.Column(db.String(20))
 	sex = db.Column(db.String(10))
+	posts = db.relationship('Roles', backref='role', lazy='dynamic')
 
 	def __repr__(self):
 	    return self.username
 
+class Roles(Base):
+    name = db.Column(db.String(30), unique=True)
+    description = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def __repr__(self):
+        return self.name
