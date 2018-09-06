@@ -10,6 +10,7 @@ from flask import Flask, redirect, url_for, request, session, abort, render_temp
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_admin import Admin
 from models.database import db
+from roles import InitRoles
 
 # Import blueprints
 from views.ui.view import ui
@@ -68,8 +69,10 @@ class initapp(object):
 
     def startdb(self):
         logging.info("Initializing database: Host=%s User=%s", config.dbhost, config.dbuser)
-        db.init_app(app)
-        db.create_all(app=app)
+        with app.app_context():
+            db.init_app(app)
+            db.create_all(app=app)
+            InitRoles()
 
     def startapp(self):
         logging.info("Starting app: Host=%s Port=%s", self.host,self.port)
